@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     public event GameStateChangedHandler OnGameStateChanged;
 
-    public enum GameState { LOADING, PAUSE, GAME }
+    public enum GameState { LOADING, MENU, GAME }
 
     private static GameManager _gameManagerInstance;
     public static GameManager GameManagerInstance
@@ -54,30 +54,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<string> m_playableLevels;
 
-    private void Start()
-    {
-        StartCoroutine(StartGame());
-    }
-
-    IEnumerator StartGame()
-    {
-        yield return new WaitForSeconds(1.0f);
-        LoadGame();
-    }
-
     private void Awake()
     {
         _gameManagerInstance = this;
     }
 
-    private void LoadGame()
+    private void Start()
     {
-        SetLevels(0, 1);
-        SceneManager.LoadSceneAsync(m_playableLevels[CurrentLevel], LoadSceneMode.Additive);
         CurrentState = GameState.LOADING;
-
-        ScoreManager.OnNextLevelLoaded?.Invoke();
-        Debug.Log(CurrentState);
     }
 
     private void SetLevels(int currentLevel, int nextLevel)
@@ -88,6 +72,8 @@ public class GameManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
+        //determines which level will be loaded next 
+        //Game over if there are no more levels
         if (NextLevel < m_playableLevels.Count)
         {
             SceneManager.LoadSceneAsync(m_playableLevels[NextLevel], LoadSceneMode.Additive);

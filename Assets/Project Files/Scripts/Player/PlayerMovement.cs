@@ -1,3 +1,4 @@
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,13 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private bool m_respectsGravity;
 
+    [SerializeField] private SkeletonAnimation m_skeletonAnimation;
+
     private void FixedUpdate()
     {
         Movement();
     }
-    void Movement ()
+    void Movement()
     {
         //restrict player movement to the bounds of the screen
         //Get the screen bounds to determine how far the player can move
@@ -32,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
         if (transform.position.y < upperBound && transform.position.x > leftBound)
         {
             m_rigidBody2D.velocity = new Vector2(horizontalInput, verticalInput) * m_speed;
-        } else
+        }
+        else
         {
             //Set left and upwards velocity to zero if player tries to move out of the bounds
             if (transform.position.x < leftBound)
@@ -50,6 +54,27 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
             m_rigidBody2D.velocity = new Vector2(horizontalInput, verticalInput) * m_speed;
+        }
+
+        //set move animation
+        if (verticalInput != 0.0f || horizontalInput != 0.0f)
+        {
+            m_skeletonAnimation.AnimationName = "anim_swim";
+            m_skeletonAnimation.loop = true;
+        }
+        else
+        {
+            m_skeletonAnimation.AnimationName = "anim_idle";
+            m_skeletonAnimation.loop = true;
+        }
+
+        //flip the character 
+        if (horizontalInput < 0.0f)
+        {
+            m_skeletonAnimation.skeleton.ScaleX = -1;
+        } else
+        {
+            m_skeletonAnimation.skeleton.ScaleX = 1;
         }
     }
 

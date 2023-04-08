@@ -28,7 +28,7 @@ public class WasteSpawner : MonoBehaviour
         {
 
             float randomX = Random.Range(-worldBounds.x, worldBounds.x);
-            float randomY = Random.Range(-worldBounds.y, worldBounds.y);
+            float randomY = Random.Range(-worldBounds.y, worldBounds.y -2);
             Vector3 randomPosition = new Vector3(randomX, randomY, 0);
             Instantiate(m_wasteObject, randomPosition, Quaternion.identity);
         }
