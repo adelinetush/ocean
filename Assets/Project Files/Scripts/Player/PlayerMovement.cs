@@ -9,8 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float m_speed;
 
     [SerializeField] private bool m_respectsGravity;
-
-    [SerializeField] private SkeletonAnimation m_skeletonAnimation;
+    [SerializeField] private bool m_rotate;
 
     private void FixedUpdate()
     {
@@ -55,33 +54,37 @@ public class PlayerMovement : MonoBehaviour
             }
             m_rigidBody2D.velocity = new Vector2(horizontalInput, verticalInput) * m_speed;
         }
+    }
 
-        //set move animation
-        if (verticalInput != 0.0f || horizontalInput != 0.0f)
+    private void Update()
+    {
+        if (m_rotate)
         {
-            m_skeletonAnimation.AnimationName = "anim_swim";
-            m_skeletonAnimation.loop = true;
-        }
-        else
-        {
-            m_skeletonAnimation.AnimationName = "anim_idle";
-            m_skeletonAnimation.loop = true;
+            RotatePlayer();
         }
 
-        //flip the character 
-        if (horizontalInput < 0.0f)
-        {
-            m_skeletonAnimation.skeleton.ScaleX = -1;
-        } else
-        {
-            m_skeletonAnimation.skeleton.ScaleX = 1;
-        }
     }
 
     private void Start()
     {
         //the character doesn't fall in some of the levels
-        if (m_respectsGravity)
+        if (!m_respectsGravity)
             m_rigidBody2D.bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    private void RotatePlayer()
+    {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+
+        Vector2 moveDir = new Vector2(horizontalInput, verticalInput);
+        moveDir.Normalize();
+
+        if (moveDir != Vector2.zero)
+        {
+            Quaternion playerRotation = Quaternion.LookRotation(Vector3.forward, moveDir);
+            Quaternion playerRotationOffset = Quaternion.Euler(0f, 0f, 90f) * playerRotation;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, playerRotationOffset, 720f * Time.deltaTime);
+        }
     }
 }

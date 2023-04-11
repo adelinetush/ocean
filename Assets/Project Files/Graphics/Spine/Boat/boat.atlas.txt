@@ -1,0 +1,15 @@
+boat.png
+size:1024,512
+filter:Linear,Linear
+pma:true
+character
+bounds:242,2,132,133
+rotate:90
+top
+bounds:526,205,444,254
+offsets:71,0,515,270
+window
+bounds:2,2,132,238
+rotate:90
+wood
+bounds:2,136,522,323

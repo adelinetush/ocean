@@ -5,7 +5,7 @@ using UnityEngine;
 public class WasteSpawner : MonoBehaviour
 {
     //Prefab for waste 
-    [SerializeField] private Collectible m_wasteObject;
+    [SerializeField] private Collectible[] m_wasteObjects;
 
     //ax amount of waste to be spawned in a level
     [SerializeField] private int m_maxWasteAmount;
@@ -30,7 +30,16 @@ public class WasteSpawner : MonoBehaviour
             float randomX = Random.Range(-worldBounds.x, worldBounds.x);
             float randomY = Random.Range(-worldBounds.y, worldBounds.y -2);
             Vector3 randomPosition = new Vector3(randomX, randomY, 0);
-            Instantiate(m_wasteObject, randomPosition, Quaternion.identity);
+
+            //Random prefab from the list 
+            int prefabIndex = Random.Range(0, m_wasteObjects.Length);
+            Collectible wasteObject = Instantiate(m_wasteObjects[prefabIndex], randomPosition, Quaternion.identity);
+
+            wasteObject.transform.SetParent(transform);
+
+            //Random rotation 
+            int randomRotation = Random.Range(0, 180);
+            wasteObject.transform.Rotate(0,0,randomRotation);
         }
     }
 }
