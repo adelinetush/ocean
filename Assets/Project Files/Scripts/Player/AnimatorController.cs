@@ -1,4 +1,5 @@
 using Spine.Unity;
+using System.Collections;
 using UnityEngine;
 
 public class AnimatorController : MonoBehaviour
@@ -9,9 +10,14 @@ public class AnimatorController : MonoBehaviour
 
     [SerializeField] private bool m_canFlip;
 
+    [SerializeField] private bool m_isAttacking;
+
     private void Update()
     {
-        SetPlayerAnimations();
+        if (!m_isAttacking)
+        {
+            SetPlayerAnimations();
+        }
     }
 
     void SetPlayerAnimations()
@@ -45,5 +51,24 @@ public class AnimatorController : MonoBehaviour
                 m_skeletonAnimation.skeleton.ScaleX = 1;
             }
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Traps"))
+        {
+            Debug.Log("Collision detected");
+            StartCoroutine(PlayAttackAnimation());
+        }
+    }
+
+    IEnumerator PlayAttackAnimation()
+    {
+        m_isAttacking = true;
+        m_skeletonAnimation.AnimationName = "anim_attack";
+        m_skeletonAnimation.loop = false;
+        yield return new WaitForSeconds(1.5f);
+        m_isAttacking = false;
+
     }
 }

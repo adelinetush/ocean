@@ -53,10 +53,12 @@ public class GameManager : MonoBehaviour
     }
 
     [SerializeField] private List<string> m_playableLevels;
+    public int _totalLevels;
 
     private void Awake()
     {
         _gameManagerInstance = this;
+        _totalLevels = m_playableLevels.Count;
     }
 
     private void Start()
@@ -64,9 +66,8 @@ public class GameManager : MonoBehaviour
         CurrentState = GameState.LOADING;
     }
 
-    private void SetLevels(int currentLevel, int nextLevel)
+    public void SetLevels(int nextLevel)
     {
-        CurrentLevel = currentLevel;
         NextLevel = nextLevel;
     }
 
@@ -74,10 +75,9 @@ public class GameManager : MonoBehaviour
     {
         //determines which level will be loaded next 
         //Game over if there are no more levels
-        if (NextLevel < m_playableLevels.Count)
+        if (NextLevel < _totalLevels)
         {
             SceneManager.LoadSceneAsync(m_playableLevels[NextLevel], LoadSceneMode.Additive);
-            SceneManager.UnloadSceneAsync(m_playableLevels[CurrentLevel]);
             CurrentLevel = NextLevel;
             NextLevel++;
 
@@ -85,6 +85,15 @@ public class GameManager : MonoBehaviour
         } else
         {
             Debug.Log("Game Over");
+        }
+    }
+
+    public void UnloadPreviousLevel() {
+
+        Scene sceneToUnload = SceneManager.GetSceneByName(m_playableLevels[CurrentLevel]);
+        if (sceneToUnload.isLoaded)
+        {
+            SceneManager.UnloadSceneAsync(sceneToUnload);
         }
     }
 

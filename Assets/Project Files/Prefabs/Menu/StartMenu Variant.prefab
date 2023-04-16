@@ -350,7 +350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8703598567763658101, guid: 114796422887ded4885c8b37066601fc, type: 3}
       propertyPath: m_Name
-      value: StartMenu
+      value: StartMenu Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8703598568060501330, guid: 114796422887ded4885c8b37066601fc, type: 3}
       propertyPath: m_text

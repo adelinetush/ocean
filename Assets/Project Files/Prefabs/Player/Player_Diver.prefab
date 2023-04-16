@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7846005701902847545}
   - component: {fileID: 6033819756771371597}
   - component: {fileID: 2926295536692136239}
-  - component: {fileID: 4361687211457743359}
   m_Layer: 0
   m_Name: Spine GameObject (skeleton)
   m_TagString: Untagged
@@ -81,9 +80,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 1053862217
+  m_SortingLayer: -2
+  m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &2926295536692136239
 MonoBehaviour:
@@ -125,20 +124,6 @@ MonoBehaviour:
   _animationName: anim_idle
   loop: 1
   timeScale: 1
---- !u!114 &4361687211457743359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4093240547563795839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a852ba008ef93e340acb7fc09eb930be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_skeletonAnimation: {fileID: 2926295536692136239}
-  m_canFlip: 1
 --- !u!1 &9113387310613251089
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +137,7 @@ GameObject:
   - component: {fileID: 9113387310613251093}
   - component: {fileID: 9113387310613251090}
   - component: {fileID: 9113387310613251091}
+  - component: {fileID: 5042491396059546480}
   m_Layer: 0
   m_Name: Player_Diver
   m_TagString: Player
@@ -277,6 +263,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_rigidBody2D: {fileID: 9113387310613251090}
-  m_speed: 3
+  m_speed: 5
   m_respectsGravity: 1
   m_rotate: 0
+  m_skeletonAnimation: {fileID: 2926295536692136239}
+--- !u!114 &5042491396059546480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9113387310613251089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a852ba008ef93e340acb7fc09eb930be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_skeletonAnimation: {fileID: 2926295536692136239}
+  m_canFlip: 1

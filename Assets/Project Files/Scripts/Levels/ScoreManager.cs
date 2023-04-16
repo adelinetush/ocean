@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,9 +7,12 @@ public class ScoreManager : MonoBehaviour
 {
 
     //Game over event for other scripts to subscribe
-    public delegate void GameOverHandler(bool gameOverWinStatus);
+    public delegate void GameOverHandler();
 
     public event GameOverHandler OnGameOver;
+
+    //Event to update other scripts of score changes
+    public static Action ScoreUpdated;
 
 
     //this is a sigleton 
@@ -28,12 +32,14 @@ public class ScoreManager : MonoBehaviour
 
     //amount of waste that's collected 
     //get and set
-    public int CurrentWasteScore
+    public int CurrentScore
     {
         get { return m_currentWasteScore; }
-        set { 
+        set
+        {
             m_currentWasteScore = value;
-            HandleWasteScoreUpdated();
+            HandleScoreUpdated();
+            ScoreUpdated?.Invoke();
         }
     }
 
@@ -60,12 +66,29 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    public void ResetScore()
+    {
+        CurrentScore = 0;
+    }
+
+    //if the level complete depends on rescuing something
+    public void RescueComplete()
+    {
+        StartCoroutine(ShowGameOver());
+    }
+
+    IEnumerator ShowGameOver()
+    {
+        yield return new WaitForSeconds(1.5f);
+        OnGameOver?.Invoke();
+    }
+
     //handles score and game over conditions 
-    private void HandleWasteScoreUpdated ()
+    private void HandleScoreUpdated()
     {
         if (m_currentWasteScore > m_maxLevelWasteScore)
         {
-            OnGameOver?.Invoke(true);
+            OnGameOver?.Invoke();
         }
     }
 
@@ -88,7 +111,6 @@ public class ScoreManager : MonoBehaviour
     private void SetLevelData(LevelData levelStats)
     {
         m_maxLevelWasteScore = levelStats.maxWasteAmount;
-        Debug.Log(m_maxLevelWasteScore);
     }
 
     //to handle finding the right level data for a level when it is loaded 

@@ -17,20 +17,13 @@ public class LevelManager : MonoBehaviour
         Debug.Log(GameManagerInstance.CurrentState);
     }
 
-    private void HandleLevelComplete(bool winStatus)
-    {
-        GameManagerInstance.LoadNextLevel();
-    }
-
     private void OnEnable()
     {
         GameManagerInstance.OnGameStateChanged += HandleGameStateChanged;
-        ScoreManagerInstance.OnGameOver += HandleLevelComplete;
     }
 
     private void OnDisable()
     {
         GameManagerInstance.OnGameStateChanged -= HandleGameStateChanged;
-        ScoreManagerInstance.OnGameOver -= HandleLevelComplete;
     }
 }
