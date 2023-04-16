@@ -8,6 +8,11 @@ public class CameraFollow : MonoBehaviour
 
     [SerializeField] private float yOffset;
 
+    private void Start()
+    {
+        trackingTarget = trackingTarget.transform.GetChild(0);
+    }
+
     void Update()
     {
         //check if tracking object has been assigned

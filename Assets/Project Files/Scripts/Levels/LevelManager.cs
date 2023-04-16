@@ -4,6 +4,8 @@ using static ScoreManager;
 
 public class LevelManager : MonoBehaviour
 {
+    //Handles loading of next level when one level is complete 
+    //Also sets the game state to running when a level is running
     private void Start()
     {
         GameManagerInstance.CurrentState = GameState.GAME;
@@ -15,20 +17,13 @@ public class LevelManager : MonoBehaviour
         Debug.Log(GameManagerInstance.CurrentState);
     }
 
-    private void HandleLevelComplete(bool winStatus)
-    {
-        GameManagerInstance.LoadNextLevel();
-    }
-
     private void OnEnable()
     {
         GameManagerInstance.OnGameStateChanged += HandleGameStateChanged;
-        ScoreManagerInstance.OnGameOver += HandleLevelComplete;
     }
 
     private void OnDisable()
     {
         GameManagerInstance.OnGameStateChanged -= HandleGameStateChanged;
-        ScoreManagerInstance.OnGameOver -= HandleLevelComplete;
     }
 }

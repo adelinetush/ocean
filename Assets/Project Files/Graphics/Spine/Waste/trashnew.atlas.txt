@@ -1,0 +1,12 @@
+trashnew.png
+size:1024,512
+filter:Linear,Linear
+pma:true
+trash1
+bounds:548,33,248,246
+trash2
+bounds:2,2,281,277
+offsets:38,25,344,338
+trash3
+bounds:285,22,261,257
+offsets:0,0,330,333

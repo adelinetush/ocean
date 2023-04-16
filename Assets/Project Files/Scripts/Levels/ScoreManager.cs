@@ -1,31 +1,49 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    public delegate void GameOverHandler(bool gameOverWinStatus);
+
+    //Game over event for other scripts to subscribe
+    public delegate void GameOverHandler();
 
     public event GameOverHandler OnGameOver;
 
+    //Event to update other scripts of score changes
+    public static Action ScoreUpdated;
 
+
+    //this is a sigleton 
     private static ScoreManager _scoreManagerInstance;
 
     public static ScoreManager ScoreManagerInstance { get { return _scoreManagerInstance; } }
+
+    //Amount of waste to be collected
     [SerializeField] private int m_maxLevelWasteScore;
 
+    //amount of waste that has been collected 
     [SerializeField] private int m_currentWasteScore;
 
-    private LevelStats m_levelStats;
-    public int CurrentWasteScore
+
+    //level data variable
+    private LevelData m_levelData;
+
+    //amount of waste that's collected 
+    //get and set
+    public int CurrentScore
     {
         get { return m_currentWasteScore; }
-        set { 
+        set
+        {
             m_currentWasteScore = value;
-            HandleWasteScoreUpdated();
+            HandleScoreUpdated();
+            ScoreUpdated?.Invoke();
         }
     }
 
+    //whenever a new level is loaded, handles the search for that level data 
     public static Action OnNextLevelLoaded;
 
     public int MaxLevelWasteScore
@@ -37,6 +55,7 @@ public class ScoreManager : MonoBehaviour
     }
     private void Awake()
     {
+        //singleton handler for this class 
         if (_scoreManagerInstance != null && _scoreManagerInstance != this)
         {
             Destroy(this.gameObject);
@@ -47,38 +66,57 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    private void HandleWasteScoreUpdated ()
+    public void ResetScore()
+    {
+        CurrentScore = 0;
+    }
+
+    //if the level complete depends on rescuing something
+    public void RescueComplete()
+    {
+        StartCoroutine(ShowGameOver());
+    }
+
+    IEnumerator ShowGameOver()
+    {
+        yield return new WaitForSeconds(1.5f);
+        OnGameOver?.Invoke();
+    }
+
+    //handles score and game over conditions 
+    private void HandleScoreUpdated()
     {
         if (m_currentWasteScore > m_maxLevelWasteScore)
         {
-            OnGameOver?.Invoke(true);
+            OnGameOver?.Invoke();
         }
     }
 
-    private void TryGetLevelStats(out LevelStats levelStats)
+    //Searches scriptable objects of type LevelData to find the level data for the current level 
+    private void TryGetLevelStats(out LevelData levelDataDetails)
     {
-        levelStats = null;
-        foreach (LevelStats levelData in ExtendedScriptableObject.GetAll<LevelStats>())
+        levelDataDetails = null;
+        foreach (LevelData levelData in ExtendedScriptableObject.GetAll<LevelData>())
         {
-            Debug.Log(levelData.name);
             if (levelData.currentLevel == GameManager.GameManagerInstance.CurrentLevel)
             {
-                levelStats = levelData;
+                levelDataDetails = levelData;
             }
         }
 
-        SetLevelStats(levelStats);
+        //sets the level data variables for that level
+        SetLevelData(levelDataDetails);
     }
 
-    private void SetLevelStats(LevelStats levelStats)
+    private void SetLevelData(LevelData levelStats)
     {
         m_maxLevelWasteScore = levelStats.maxWasteAmount;
-        Debug.Log(m_maxLevelWasteScore);
     }
 
+    //to handle finding the right level data for a level when it is loaded 
     public void TriggerLevelStats()
     {
-        TryGetLevelStats(out m_levelStats);
+        TryGetLevelStats(out m_levelData);
     }
 
     private void Start()

@@ -1,0 +1,22 @@
+spine me.png
+size:1024,1024
+filter:Linear,Linear
+pma:true
+Leg2
+bounds:569,529,461,326
+rotate:90
+body
+bounds:2,473,565,517
+eyeris Merged
+bounds:2,2,225,82
+eyes
+bounds:897,749,241,123
+rotate:90
+face
+bounds:2,86,405,385
+glasses
+bounds:409,97,374,203
+rotate:90
+leg1
+bounds:614,21,506,180
+rotate:90

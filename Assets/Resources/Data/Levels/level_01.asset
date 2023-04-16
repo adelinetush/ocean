@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: level_01
   m_EditorClassIdentifier: 
   currentLevel: 0
-  maxWasteAmount: 15
+  maxWasteAmount: 20
   maxTrapsDestroyed: 0
+  playerType: 1
