@@ -9,4 +9,5 @@ public class LevelData : ExtendedScriptableObject
     public int maxWasteAmount;
     public int maxTrapsDestroyed;
     public Enum_PlayerType playerType;
+    public string levelDescription;
 }

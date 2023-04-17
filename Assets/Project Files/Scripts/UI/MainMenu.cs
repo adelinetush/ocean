@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,6 +24,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private CanvasGroup m_hudMenu;
     [SerializeField] private CanvasGroup m_levelCompleteMenu;
     [SerializeField] private CanvasGroup m_pauseMenu;
+
+    //Level Complete details
+    [SerializeField] private TextMeshProUGUI m_levelCompleteDescription;
+    [SerializeField] private TextMeshProUGUI m_gameOverGratitudeText;
 
     private void Awake()
     {
@@ -67,11 +72,17 @@ public class MainMenu : MonoBehaviour
         Show(m_levelCompleteMenu);
 
         //Next level is disabled if there are no more levels
-        m_nextLevelButton.GetComponent<Image>().color = GameManager.GameManagerInstance.NextLevel < GameManager.GameManagerInstance._totalLevels ? Color.white : Color.gray;
-        m_nextLevelButton.enabled = GameManager.GameManagerInstance.NextLevel < GameManager.GameManagerInstance._totalLevels;
+        bool isLastLevel = GameManager.GameManagerInstance.NextLevel < GameManager.GameManagerInstance._totalLevels;
+
+        m_nextLevelButton.GetComponent<Image>().color = isLastLevel ? Color.white : Color.gray;
+        m_gameOverGratitudeText.gameObject.SetActive(!isLastLevel);
+        m_nextLevelButton.enabled = isLastLevel;
+
+        m_levelCompleteDescription.text = LevelManager.m_levelCompleteMessage;
 
         //Reset score when level ends
         ScoreManager.ScoreManagerInstance.ResetScore();
+
     }
 
     public void ReturnToMainMenu()

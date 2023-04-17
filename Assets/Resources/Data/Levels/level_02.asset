@@ -16,3 +16,6 @@ MonoBehaviour:
   maxWasteAmount: 15
   maxTrapsDestroyed: 0
   playerType: 0
+  levelDescription: Preserving endangered aquatic species is important to maintain
+    the balance of the ecosystem. Every species plays a vital role in the food chain,
+    and the loss of one species can have far-reaching effects.

@@ -16,3 +16,6 @@ MonoBehaviour:
   maxWasteAmount: 20
   maxTrapsDestroyed: 0
   playerType: 1
+  levelDescription: 'Overfishing can have serious consequences for the ocean''s ecosystem
+    and our food supply. When we fish too much, we remove too many fish from the
+    sea, and this can cause populations to decline and even collapse. '

@@ -250,6 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_skeletonAnimation: {fileID: 6714115419996982814}
   m_canFlip: 0
+  m_isAttacking: 0
 --- !u!1 &8251640108560147534
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,3 +403,10 @@ MonoBehaviour:
   m_speed: 3
   m_respectsGravity: 0
   m_rotate: 1
+  m_canDash: 0
+  m_isDashing: 0
+  m_dashForce: 0
+  m_dashTime: 0
+  m_dashCoolDown: 0
+  m_dashEnabled: 0
+  m_skeletonAnimation: {fileID: 6714115419996982814}

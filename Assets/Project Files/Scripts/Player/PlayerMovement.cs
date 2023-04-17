@@ -11,12 +11,23 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool m_respectsGravity;
     [SerializeField] private bool m_rotate;
 
+    //Dash
+    [SerializeField] private bool m_canDash;
+    [SerializeField] private bool m_isDashing;
+    [SerializeField] private float m_dashForce;
+    [SerializeField] private float m_dashTime;
+    [SerializeField] private float m_dashCoolDown;
+
+    [SerializeField] private bool m_dashEnabled;
+
+    [SerializeField] private SkeletonAnimation m_skeletonAnimation;
     private void FixedUpdate()
     {
         Movement();
     }
     void Movement()
     {
+        if (m_isDashing) { return; }
         //restrict player movement to the bounds of the screen
         //Get the screen bounds to determine how far the player can move
         Vector2 screenBounds = new Vector2(Screen.width, Screen.height);
@@ -63,6 +74,11 @@ public class PlayerMovement : MonoBehaviour
             RotatePlayer();
         }
 
+        if (Input.GetButtonDown("Fire2") && m_canDash && m_dashEnabled)
+        {
+            StartCoroutine(Dash());
+        }
+
     }
 
     private void Start()
@@ -74,6 +90,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void RotatePlayer()
     {
+        if (m_isDashing)
+        {
+            return;
+        }
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -86,5 +106,16 @@ public class PlayerMovement : MonoBehaviour
             Quaternion playerRotationOffset = Quaternion.Euler(0f, 0f, 90f) * playerRotation;
             transform.rotation = Quaternion.RotateTowards(transform.rotation, playerRotationOffset, 720f * Time.deltaTime);
         }
+    }
+
+    private IEnumerator Dash()
+    {
+        m_canDash = false;
+        m_isDashing = true;
+        m_rigidBody2D.velocity = new Vector2(transform.localScale.x * m_dashForce * m_skeletonAnimation.skeleton.ScaleX, 0f);
+        yield return new WaitForSeconds(m_dashTime);
+        m_isDashing = false;
+        yield return new WaitForSeconds(m_dashCoolDown);
+        m_canDash = true;
     }
 }
