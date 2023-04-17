@@ -1,5 +1,6 @@
 //This script handles waste logic
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Collectible : MonoBehaviour
@@ -10,6 +11,7 @@ public class Collectible : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             gameObject.SetActive(false);
+            //Update score
             ScoreManager.ScoreManagerInstance.CurrentScore += 1;
         }
     }

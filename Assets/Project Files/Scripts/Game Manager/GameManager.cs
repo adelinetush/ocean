@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public enum GameState { LOADING, MENU, GAME }
 
+    //Game manager instance 
     private static GameManager _gameManagerInstance;
     public static GameManager GameManagerInstance
     {
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Keep track of the levels 
     private int _currentLevel;
     public int CurrentLevel
     {
@@ -88,6 +90,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Unloads levels
     public void UnloadPreviousLevel() {
 
         Scene sceneToUnload = SceneManager.GetSceneByName(m_playableLevels[CurrentLevel]);

@@ -53,6 +53,7 @@ public class AnimatorController : MonoBehaviour
         }
     }
 
+    //Play an animation when player interacts with traps 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Traps"))
@@ -62,6 +63,7 @@ public class AnimatorController : MonoBehaviour
         }
     }
 
+    //Animation that plays when player "attacks" something 
     IEnumerator PlayAttackAnimation()
     {
         m_isAttacking = true;

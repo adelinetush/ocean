@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private bool m_dashEnabled;
 
+    //Will be used to check for flip
     [SerializeField] private SkeletonAnimation m_skeletonAnimation;
     private void FixedUpdate()
     {
@@ -108,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //Adding dash - mostly useful for level 2 
     private IEnumerator Dash()
     {
         m_canDash = false;
