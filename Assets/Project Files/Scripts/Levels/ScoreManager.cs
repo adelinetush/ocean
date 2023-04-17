@@ -26,7 +26,6 @@ public class ScoreManager : MonoBehaviour
     //amount of waste that has been collected 
     [SerializeField] private int m_currentWasteScore;
 
-
     //level data variable
     private LevelData m_levelData;
 

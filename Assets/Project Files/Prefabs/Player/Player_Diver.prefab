@@ -266,6 +266,12 @@ MonoBehaviour:
   m_speed: 5
   m_respectsGravity: 1
   m_rotate: 0
+  m_canDash: 1
+  m_isDashing: 0
+  m_dashForce: 50
+  m_dashTime: 0.05
+  m_dashCoolDown: 3
+  m_dashEnabled: 1
   m_skeletonAnimation: {fileID: 2926295536692136239}
 --- !u!114 &5042491396059546480
 MonoBehaviour:
@@ -281,3 +287,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_skeletonAnimation: {fileID: 2926295536692136239}
   m_canFlip: 1
+  m_isAttacking: 0
