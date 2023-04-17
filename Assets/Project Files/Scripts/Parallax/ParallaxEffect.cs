@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ParallaxEffect : MonoBehaviour
 {
+    //Handles the scrolling backgrounds
+
     [SerializeField] private float length, startPosition;
     [SerializeField] private GameObject camera;
     [SerializeField] private float parallaxEffect;

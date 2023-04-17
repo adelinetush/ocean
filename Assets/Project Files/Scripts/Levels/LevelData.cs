@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "level_", menuName = "LevelStats")]
 public class LevelData : ExtendedScriptableObject
 {
+    //Some of the variables that vary across levels
     public int currentLevel;
     public int maxWasteAmount;
     public int maxTrapsDestroyed;
